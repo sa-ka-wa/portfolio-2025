@@ -1,0 +1,50 @@
+.intro {
+  position: relative;
+  z-index: -2;
+  padding: 4rem 2rem;
+  background: var(--dark-bg);
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  max-width: 600px;
+}
+
+.blueTitle {
+  background: var(--blue-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.orangeTitle {
+  background: var(--orange-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+p {
+  font-size: 1.125rem; /* ~18px */
+  line-height: 1.75rem;
+  color: var(--text-light);
+  max-width: 800px;
+}
+
+/* ✅ Positioning overrides */
+.softwareIntro {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.archIntro {
+  text-align: left;
+  justify-content: flex-start;
+}
