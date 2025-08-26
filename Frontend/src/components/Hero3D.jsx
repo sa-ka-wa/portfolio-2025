@@ -34,7 +34,7 @@ const Hero3D = () => {
     let model;
 
     loader.load(
-      "/src/assets/model/towercraneoffice.glb",
+      "/model/towercraneoffice.glb",
       (gltf) => {
         model = gltf.scene;
 
