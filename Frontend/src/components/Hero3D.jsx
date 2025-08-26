@@ -1,106 +1,94 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import styles from "./Hero3D.module.css";
 
 const Hero3D = () => {
   const mountRef = useRef(null);
-  const [scene] = useState(() => new THREE.Scene());
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    // --- Setup scene ---
+    const scene = new THREE.Scene();
 
-    // Set up Three.js scene
+    // --- Setup camera ---
     const width = mountRef.current.clientWidth;
     const height = mountRef.current.clientHeight;
+    const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+    camera.position.set(0, 2, 5);
 
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    camera.position.z = 5;
-
+    // --- Setup renderer ---
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
     mountRef.current.appendChild(renderer.domElement);
 
-    // Create geometry with different colors on each face
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
-
-    const materials = [
-      new THREE.MeshBasicMaterial({
-        color: 0x2563eb,
-        transparent: true,
-        opacity: 0.8,
-      }),
-      new THREE.MeshBasicMaterial({
-        color: 0x3b82f6,
-        transparent: true,
-        opacity: 0.8,
-      }),
-      new THREE.MeshBasicMaterial({
-        color: 0x60a5fa,
-        transparent: true,
-        opacity: 0.8,
-      }),
-      new THREE.MeshBasicMaterial({
-        color: 0xf97316,
-        transparent: true,
-        opacity: 0.8,
-      }),
-      new THREE.MeshBasicMaterial({
-        color: 0xfb923c,
-        transparent: true,
-        opacity: 0.8,
-      }),
-      new THREE.MeshBasicMaterial({
-        color: 0xfdba74,
-        transparent: true,
-        opacity: 0.8,
-      }),
-    ];
-
-    const cube = new THREE.Mesh(geometry, materials);
-    scene.add(cube);
-
-    // Add lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    // --- Lights ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(1, 1, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 10, 7.5);
     scene.add(directionalLight);
 
-    // Animation
+    // --- Load GLB model ---
+    const loader = new GLTFLoader();
+    let model;
+
+    loader.load(
+      "/src/assets/model/towercraneoffice.glb",
+      (gltf) => {
+        model = gltf.scene;
+
+        // Center and scale model automatically
+        const box = new THREE.Box3().setFromObject(model);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+
+        model.position.sub(center); // center the model at (0,0,0)
+
+        // scale down if it’s too large
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 3 / maxDim; // fit into a 3-unit cube
+        model.scale.setScalar(scale);
+
+        scene.add(model);
+      },
+      undefined,
+      (error) => console.error("Error loading GLB:", error)
+    );
+
+    // --- Animation loop ---
     const animate = () => {
       requestAnimationFrame(animate);
 
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
+      if (model) {
+        model.rotation.y += 0.002; // slow spin
+      }
 
       renderer.render(scene, camera);
     };
-
     animate();
 
-    // Handle resize
+    // --- Resize handling ---
     const handleResize = () => {
       const newWidth = mountRef.current.clientWidth;
       const newHeight = mountRef.current.clientHeight;
-
       camera.aspect = newWidth / newHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(newWidth, newHeight);
     };
-
     window.addEventListener("resize", handleResize);
 
-    // Clean up
+    // --- Cleanup ---
     return () => {
       window.removeEventListener("resize", handleResize);
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }
-      renderer.dispose(); // ✅ free GPU memory
+      renderer.dispose();
     };
-  }, [scene]);
+  }, []);
 
   const handleButtonClick = (section) => {
     const element = document.getElementById(section);
