@@ -1,0 +1,77 @@
+.projectCard {
+  background: #1e293b;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.projectCard:hover {
+  transform: translateY(-10px) rotate3d(0.5, 0, 0, 10deg);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.projectImg {
+  height: 200px;
+  width: 100%;
+  background: linear-gradient(120deg, #3b82f6, #2563eb);
+  position: relative;
+  overflow: hidden;
+}
+
+.architecture .projectImg {
+  background: linear-gradient(120deg, #f97316, #ea580c);
+}
+
+.projectContent {
+  padding: 20px;
+}
+
+.projectTitle {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.projectDesc {
+  color: #94a3b8;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.projectTech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.techTag {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.architecture .techTag {
+  background: rgba(249, 115, 22, 0.2);
+  color: #f97316;
+}
+
+.projectLink {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: gap 0.3s;
+}
+
+.architecture .projectLink {
+  color: #f97316;
+}
+
+.projectLink:hover {
+  gap: 10px;
+}
