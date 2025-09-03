@@ -1,5 +1,5 @@
 // src/components/Global3DCanvas.jsx
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import gsap from "gsap";
@@ -10,9 +10,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Global3DCanvas = () => {
   const mountRef = useRef(null);
+  const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0); // ✅ track % progress
 
   useEffect(() => {
-    // --- Setup scene ---
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(
@@ -29,9 +30,8 @@ const Global3DCanvas = () => {
       powerPreference: "high-performance",
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // Make it fixed behind everything
     renderer.domElement.style.position = "fixed";
     renderer.domElement.style.top = "0";
     renderer.domElement.style.left = "0";
@@ -50,7 +50,7 @@ const Global3DCanvas = () => {
     const loader = new GLTFLoader();
     let model;
     let animationFrameId;
-    let rotationAnimation; // To store the rotation tween
+    let rotationAnimation;
 
     loader.load(
       "/model/towercraneoffice.glb",
@@ -67,24 +67,24 @@ const Global3DCanvas = () => {
         const maxDim = Math.max(size.x, size.y, size.z);
         model.scale.setScalar(3 / maxDim);
 
-        // Start with model on the right (hero section position)
+        // Start position
         model.position.x = 2;
         model.position.y = 1;
 
         scene.add(model);
 
-        // Wait for DOM elements to be available
+        // Hide loader
+        setLoading(false);
+
+        // --- Scroll Animations ---
         setTimeout(() => {
-          // --- Scroll-based animations ---
           const heroSection = document.querySelector("#home");
           const softwareSection = document.querySelector("#software");
           const archSection = document.querySelector("#architecture");
 
           if (heroSection && softwareSection && archSection) {
-            // Reset scroll triggers first to avoid conflicts
             ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
-            // Move from right (hero) to center
             gsap.to(model.position, {
               x: 0,
               y: 0,
@@ -93,11 +93,9 @@ const Global3DCanvas = () => {
                 start: "top top",
                 end: "bottom top",
                 scrub: true,
-                markers: false,
               },
             });
 
-            // Move into Software section
             gsap.to(model.position, {
               x: -2,
               y: -1.5,
@@ -109,7 +107,6 @@ const Global3DCanvas = () => {
               },
             });
 
-            // Move into Architecture section
             gsap.to(model.position, {
               x: 2,
               y: -3,
@@ -121,12 +118,11 @@ const Global3DCanvas = () => {
               },
             });
 
-            // Refresh ScrollTrigger after setting up all animations
             ScrollTrigger.refresh();
           }
         }, 500);
 
-        // Continuous spin using GSAP (as in original code)
+        // Continuous spin
         rotationAnimation = gsap.to(model.rotation, {
           y: "+=" + Math.PI * 2,
           repeat: -1,
@@ -134,8 +130,17 @@ const Global3DCanvas = () => {
           ease: "none",
         });
       },
-      undefined,
-      (err) => console.error("Error loading model:", err)
+      // ✅ Progress callback updates state
+      (xhr) => {
+        if (xhr.total) {
+          const percent = (xhr.loaded / xhr.total) * 100;
+          setProgress(Math.min(100, percent.toFixed(0)));
+        }
+      },
+      (err) => {
+        console.error("Error loading model:", err);
+        setLoading(false);
+      }
     );
 
     // --- Animation loop ---
@@ -145,7 +150,7 @@ const Global3DCanvas = () => {
     };
     animate();
 
-    // --- Resize handler with debouncing ---
+    // --- Resize handler ---
     let resizeTimeout;
     const onResize = () => {
       clearTimeout(resizeTimeout);
@@ -153,8 +158,6 @@ const Global3DCanvas = () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-
-        // Refresh ScrollTrigger after resize
         ScrollTrigger.refresh();
       }, 250);
     };
@@ -167,18 +170,10 @@ const Global3DCanvas = () => {
       clearTimeout(resizeTimeout);
       cancelAnimationFrame(animationFrameId);
 
-      // Kill the rotation animation
-      if (rotationAnimation) {
-        rotationAnimation.kill();
-      }
-
-      // Properly dispose of Three.js resources
+      if (rotationAnimation) rotationAnimation.kill();
       renderer.dispose();
-
-      // Remove all ScrollTriggers
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
-      // Remove canvas from DOM
       const canvas = document.getElementById("global-3d-canvas");
       if (canvas && canvas.parentNode) {
         canvas.parentNode.removeChild(canvas);
@@ -186,7 +181,18 @@ const Global3DCanvas = () => {
     };
   }, []);
 
-  return <div ref={mountRef} style={{ display: "none" }} />;
+  return (
+    <>
+      {loading && (
+        <div className="loader-overlay">
+          <div className="loader-spinner"></div>
+          {/* ✅ Show progress % */}
+          <p>Loading 3D scene... {progress}%</p>
+        </div>
+      )}
+      <div ref={mountRef} style={{ display: "none" }} />
+    </>
+  );
 };
 
 export default Global3DCanvas;

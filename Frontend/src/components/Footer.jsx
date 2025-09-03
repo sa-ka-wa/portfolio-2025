@@ -16,7 +16,7 @@ const Footer = () => {
         </div>
         <div className={styles.right}>
           <a
-            href="https://github.com/devarchsphere"
+            href="https://github.com/sa-ka-wa"
             className={styles.socialLink}
             target="_blank"
             rel="noopener noreferrer"
@@ -25,7 +25,7 @@ const Footer = () => {
             <i className="fab fa-github"></i> GitHub
           </a>
           <a
-            href="https://linkedin.com/in/devarchsphere"
+            href="https://www.linkedin.com/in/samuel-wainaina-98290b210/"
             className={styles.socialLink}
             target="_blank"
             rel="noopener noreferrer"
@@ -34,7 +34,7 @@ const Footer = () => {
             <i className="fab fa-linkedin-in"></i> LinkedIn
           </a>
           <a
-            href="mailto:hello@devarchsphere.com"
+            href="mailto:samiekaranjawainaina@gmail.com"
             className={styles.socialLink}
             aria-label="Email"
           >

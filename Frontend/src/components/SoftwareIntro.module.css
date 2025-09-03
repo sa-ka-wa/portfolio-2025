@@ -1,0 +1,467 @@
+/* SoftwareIntro.module.css */
+.softwareIntro {
+  padding: 5rem 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.modelContainer {
+  position: relative;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvasPlaceholder {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #e6e9ef, #ffffff);
+  box-shadow: 20px 20px 60px #d1d3d7, -20px -20px 60px #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.techSphere {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #dbe4f0, #ffffff);
+  box-shadow: inset 5px 5px 10px #cbced1, inset -5px -5px 10px #ffffff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbitingTech {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: rotate 20s linear infinite;
+}
+
+.techItem {
+  position: absolute;
+  background: #3498db;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.techItem:nth-child(1) {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #3498db;
+}
+
+.techItem:nth-child(2) {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #2ecc71;
+}
+
+.techItem:nth-child(3) {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #e74c3c;
+}
+
+.techItem:nth-child(4) {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background: #f39c12;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.details {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.tabNavigation {
+  display: flex;
+  border-bottom: 1px solid #eaeaea;
+  margin-bottom: 1.5rem;
+}
+
+.tabButton {
+  padding: 0.8rem 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: #7f8c8d;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tabButton:hover {
+  color: #3498db;
+}
+
+.tabButton.active {
+  color: #3498db;
+}
+
+.tabButton.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #3498db;
+  border-radius: 3px 3px 0 0;
+}
+
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.skillCategory h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.skillCategory ul {
+  list-style: none;
+  padding: 0;
+}
+
+.skillCategory li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f1f1f1;
+  color: #34495e;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.skillCategory li::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: #3498db;
+}
+
+.experienceList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.experienceItem {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.experienceItem:last-child {
+  border-bottom: none;
+}
+
+.experienceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.experienceHeader h3 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.date {
+  background: #eaf6ff;
+  color: #3498db;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.company {
+  color: #7f8c8d;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.experienceItem ul {
+  list-style: none;
+  padding: 0;
+}
+
+.experienceItem li {
+  padding: 0.3rem 0;
+  color: #34495e;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.experienceItem li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #3498db;
+  font-weight: bold;
+}
+
+.educationList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.educationItem {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.educationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.educationHeader h3 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.institution {
+  color: #3498db;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.details {
+  color: #7f8c8d;
+}
+
+.certifications h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.certifications ul {
+  list-style: none;
+  padding: 0;
+}
+
+.certifications li {
+  padding: 0.5rem 0;
+  color: #34495e;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.certifications li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #2ecc71;
+}
+
+.ctaSection {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #f1f1f1;
+}
+
+.ctaButton {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  background: white;
+  color: #3498db;
+  border: 1px solid #3498db;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondaryButton:hover {
+  background: #f7f9fc;
+}
+
+/* Responsive design */
+@media (max-width: 968px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .modelContainer {
+    height: 300px;
+  }
+
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .softwareIntro {
+    padding: 3rem 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .experienceHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .educationHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .ctaSection {
+    flex-direction: column;
+  }
+}
+/* SoftwareIntro.module.css */
+
+/* match .intro reference */
+.softwareIntro {
+  position: relative;
+  z-index: 1; /* keep content above canvas */
+  padding: 4rem 2rem;
+  background: transparent; /* ✅ remove gradient background */
+  color: var(--text-light, #f1f1f1);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* ✅ push everything to the right */
+  text-align: right; /* ✅ align text right */
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: var(--blue-gradient, linear-gradient(135deg, #2563eb, #3b82f6));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin-left: auto; /* ✅ keeps text to the right side */
+  line-height: 1.6;
+  color: var(--text-light, #ddd);
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* ✅ text takes more width, model stays right */
+  gap: 2rem;
+  align-items: start;
+  justify-content: flex-end;
+}
+
+.details {
+  background: rgba(0, 0, 0, 0.4); /* translucent card */
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  color: #f1f1f1;
+}
+
+.modelContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* ✅ keep model right */
+  height: 400px;
+}
